@@ -5,11 +5,10 @@ import time
 
 from kafka import KafkaConsumer, KafkaProducer
 
-
 class Producer(threading.Thread):
 
     def run(self):
-        producer = KafkaProducer(bootstrap_servers='localhost:9092',
+        producer = KafkaProducer(bootstrap_servers='bigdata-1:9092',
                                  value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
         while True:
@@ -31,11 +30,11 @@ class Producer(threading.Thread):
 class Consumer(threading.Thread):
 
     def run(self):
-        stream = KafkaConsumer(bootstrap_servers='localhost:9092',
+        stream = KafkaConsumer(bootstrap_servers='bigdata-1:9092',
                                auto_offset_reset='latest')
         stream.subscribe(['topic'])
-	for tuple in stream:
-		print(tuple)
+        for tuple in stream:
+            print(tuple)
 
 
 if __name__ == '__main__':
